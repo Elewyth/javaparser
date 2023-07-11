@@ -71,9 +71,16 @@ public interface ResolvedTypeDeclaration extends ResolvedDeclaration {
     // /
     /**
      * Is this the declaration of a class?
-     * Note that an Enum is not considered a Class in this case.
+     * Note that an Enum or Record is not considered a Class in this case.
      */
     default boolean isClass() {
+        return false;
+    }
+
+    /**
+     * Is this the declaration of a record?
+     */
+    default boolean isRecord() {
         return false;
     }
 

@@ -98,6 +98,12 @@ public class JavaSymbolSolver implements SymbolResolver {
                 return resultClass.cast(resolved);
             }
         }
+        if (node instanceof RecordDeclaration) {
+            ResolvedReferenceTypeDeclaration resolved = toTypeDeclaration(node);
+            if (resultClass.isInstance(resolved)) {
+                return resultClass.cast(resolved);
+            }
+        }
         if (node instanceof EnumDeclaration) {
             ResolvedReferenceTypeDeclaration resolved = toTypeDeclaration(node);
             if (resultClass.isInstance(resolved)) {
@@ -313,6 +319,9 @@ public class JavaSymbolSolver implements SymbolResolver {
         }
         if (node instanceof EnumConstantDeclaration) {
             return new JavaParserEnumDeclaration((EnumDeclaration) demandParentNode(node), typeSolver);
+        }
+        if (node instanceof RecordDeclaration) {
+            return new JavaParserRecordDeclaration((RecordDeclaration) node, typeSolver);
         }
         throw new IllegalArgumentException("Cannot get a reference type declaration from " + node.getClass().getCanonicalName());
     }
